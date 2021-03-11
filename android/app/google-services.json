@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "872912471605",
+    "project_id": "courseflutter",
+    "storage_bucket": "courseflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872912471605:android:656c4f71348cd69934537c",
+        "android_client_info": {
+          "package_name": "com.wael.course_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872912471605-k8hmba4obvq2guor749i80luev1e99g8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wael.course_flutter",
+            "certificate_hash": "174d33eb1123f94669965193f284e452b34455d3"
+          }
+        },
+        {
+          "client_id": "872912471605-2q3rl4i7v70lsckg4oo30jish7lahlkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpWy7hMB7GWVvwubFKQpOVM1nDB4e13n4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872912471605-2q3rl4i7v70lsckg4oo30jish7lahlkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
