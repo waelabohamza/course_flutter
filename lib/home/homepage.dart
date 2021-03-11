@@ -1,6 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:course_flutter/crud/addnotes.dart';
 import 'package:course_flutter/crud/editnotes.dart';
 import 'package:course_flutter/crud/viewnotes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
