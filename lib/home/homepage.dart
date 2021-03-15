@@ -23,17 +23,49 @@ class _HomePageState extends State<HomePage> {
 
   var fbm = FirebaseMessaging.instance;
 
-  
- Future initalMessage() async {
-   RemoteMessage initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+
+ initalMessage() async {
+    
+   var message =   await FirebaseMessaging.instance.getInitialMessage() ;
+
+   if (message != null){
+     
      Navigator.of(context).pushNamed("addnotes") ; 
-  }
+
+   } 
+
+ }
 
 
+ requestPermssion() async {
+    
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        print('User granted permission');
+      } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+        print('User granted provisional permission');
+      } else {
+        print('User declined or has not accepted permission');
+      }
+
+ }
+
+ 
   @override
   void initState() {
-    initalMessage()  ; 
+     requestPermssion() ; 
+     initalMessage() ; 
     fbm.getToken().then((token) {
       print("=================== Token ==================");
       print(token);
