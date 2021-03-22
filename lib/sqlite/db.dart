@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'dart:io' as io;
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
 class Note {
 
-  Database _db;
+  static Database _db;
 
   Future<Database> get db async {
 
@@ -24,8 +26,8 @@ class Note {
   }
 
   initialDB() async{
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath,'testdb.db');
+    io.Directory docDirect = await getApplicationDocumentsDirectory();
+    String path = join(docDirect.path,'testdb.db');
     var mydb = await openDatabase(path,version: 1,onCreate: _onCreate);
     return mydb;
   }

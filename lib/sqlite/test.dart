@@ -1,5 +1,5 @@
 import "package:flutter/material.dart" ;
-import 'package:sqflite/sqflite.dart'; 
+import 'db.dart';
 
  
 
@@ -10,11 +10,32 @@ class SqlTest extends StatefulWidget {
   _SqlTestState createState() => _SqlTestState();
 }
 
-class _SqlTestState extends State<SqlTest> {
+class _SqlTestState extends State<SqlTest>{
+
+  var db = new Note() ; 
+
+  insetData() async {
+    var count = await db.create({
+      "note" : "basel"
+    }) ; 
+    print(count) ; 
+  }
+   
+
+
+  @override
+  void initState() {
+      insetData() ; 
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Text("wael"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Test'),
+      ),
+      body: Container(child: Text("wael")),
     );
   }
 }
