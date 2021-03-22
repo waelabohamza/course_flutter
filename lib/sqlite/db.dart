@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io' as io;
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -26,8 +24,8 @@ class Note {
   }
 
   initialDB() async{
-    io.Directory docDirect = await getApplicationDocumentsDirectory();
-    String path = join(docDirect.path,'testdb.db');
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath,'testdb.db');
     var mydb = await openDatabase(path,version: 1,onCreate: _onCreate);
     return mydb;
   }
@@ -51,7 +49,7 @@ class Note {
     
     var db_client = await db;
 
-    var notes = await db_client.query('notes',orderBy: 'id DESC',limit: 2);
+    var notes = await db_client.query('notes',orderBy: 'id DESC');
     
     return notes; 
     
@@ -62,6 +60,15 @@ class Note {
     var db_client = await db;
 
     var deleted_note = await db_client.rawUpdate('DELETE FROM notes WHERE id="$id"');
+
+    return deleted_note;
+  }
+
+    deleteAllNote() async{
+
+    var db_client = await db;
+
+    var deleted_note = await db_client.delete("notes") ; 
 
     return deleted_note;
   }
