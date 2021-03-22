@@ -11,19 +11,17 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 bool islogin;
 
-
- Future backgroudMessage(RemoteMessage message) async {
-    print("=================== BackGroud Message ========================") ;
-    print("${message.notification.body}") ;
+Future backgroudMessage(RemoteMessage message) async {
+  print("=================== BackGroud Message ========================");
+  print("${message.notification.body}");
 }
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp();
-  
-  FirebaseMessaging.onBackgroundMessage(backgroudMessage) ; 
+
+  FirebaseMessaging.onBackgroundMessage(backgroudMessage);
 
   var user = FirebaseAuth.instance.currentUser;
   if (user == null) {
