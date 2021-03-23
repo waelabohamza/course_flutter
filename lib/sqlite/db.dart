@@ -2,95 +2,65 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-
-class Note {
-
+class SqlTest {
   static Database _db;
 
   Future<Database> get db async {
-
-    if(_db == null)
-    {
-      _db = await initialDB();
-
-      return _db; 
-    
-    }else{
-
+    if (_db == null) {
+      _db = await initilDb();
       return _db;
-
+    } else {
+      return _db;
     }
-
   }
 
-  initialDB() async{
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath,'testdb.db');
-    var mydb = await openDatabase(path,version: 1,onCreate: _onCreate);
+  initilDb() async {
+    String databasepath = await getDatabasesPath();
+
+    String path = join(databasepath, "test.db");
+
+    Database mydb = await openDatabase(path, version: 1, onCreate: _oncreate);
+
     return mydb;
   }
 
-  _onCreate(Database db,int version) async{
-    await db.execute('CREATE TABLE "notes" ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"note"	TEXT NOT NULL)');
-    print('Notes Table Created');
+  _oncreate(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE "notes" ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"note"	TEXT NOT NULL)');
+    print("INSERT TABLE SUCCESS");
   }
 
-  Future<int> create(Map<String,dynamic> data) async{
+  readData(String sql) async {
+    Database mydb = await db;
 
-    var db_client = await db;
+    List<Map> response = await mydb.rawQuery(sql);
 
-    var insert = db_client.insert('notes', data);
-
-    return insert;
-
+    return response;
   }
 
-  Future<List> getData() async{
-    
-    var db_client = await db;
+  insertData(String sql) async {
+    Database mydb = await db;
 
-    var notes = await db_client.query('notes',orderBy: 'id DESC');
-    
-    return notes; 
-    
+    int response = await mydb.rawInsert(sql);
+
+    return response;
   }
 
-  Future<int> deleteNote(int id) async{
+  updateData(String sql) async {
+    Database mydb = await db;
 
-    var db_client = await db;
+    int response = await mydb.rawUpdate(sql);
 
-    var deleted_note = await db_client.rawUpdate('DELETE FROM notes WHERE id="$id"');
-
-    return deleted_note;
+    return response;
   }
 
-    deleteAllNote() async{
+  deleteData(String sql) async {
+    Database mydb = await db;
 
-    var db_client = await db;
+    int response = await mydb.rawDelete(sql);
 
-    var deleted_note = await db_client.delete("notes") ; 
-
-    return deleted_note;
+    return response;
   }
 
-  Future<int> updateNote(String note,int id) async{
-
-    var db_client = await db;
-
-    var updated_note = await db_client.rawUpdate('UPDATE notes SET note="$note" WHERE id="$id" ');
-
-    return updated_note;
-  }
-
-
-  Future<List> getSingleRow(int id) async{
-    
-    var db_client = await db;
-
-    var note = await db_client.query('notes',where: 'id = "$id"');
-    
-    return note; 
-    
-  }
-
+ 
 }

@@ -2,14 +2,14 @@ import 'package:course_flutter/auth/login.dart';
 import 'package:course_flutter/auth/signup.dart';
 import 'package:course_flutter/crud/addnotes.dart';
 import 'package:course_flutter/home/homepage.dart';
+import 'package:course_flutter/sqlite/addnote.dart';
+import 'package:course_flutter/sqlite/testdb.dart';
 import 'package:course_flutter/test.dart';
 import 'package:course_flutter/testtwo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-import 'sqlite/test.dart';
 
 bool islogin;
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: islogin == false ? Login() : HomePage(),
-      home: SqlTest(),
+      home: TestDB(),
       theme: ThemeData(
           // fontFamily: "NotoSerif",
           primaryColor: Colors.blue,
@@ -55,7 +55,9 @@ class MyApp extends StatelessWidget {
         "signup": (context) => SignUp(),
         "homepage": (context) => HomePage(),
         "addnotes": (context) => AddNotes(),
-        "testtwo": (context) => TestTwo()
+        "testtwo": (context) => TestTwo()  ,
+        "addnote" : (conetxt) => AddNotesSql() , 
+        "testdb" : (context) => TestDB()
       },
     );
   }
