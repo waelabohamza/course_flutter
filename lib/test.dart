@@ -15,13 +15,8 @@ class _TestState extends State<Test> {
           title: Text('Test'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-                child: ElevatedButton(
-              onPressed: () async {},
-              child: Text("Upload Image"),
-            ))
+            
           ],
         ));
   }

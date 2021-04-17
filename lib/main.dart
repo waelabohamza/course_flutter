@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: islogin == false ? Login() : HomePage(),
-      home: TestDB(),
+      home: Test(),
       theme: ThemeData(
           // fontFamily: "NotoSerif",
           primaryColor: Colors.blue,
