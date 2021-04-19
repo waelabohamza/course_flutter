@@ -28,7 +28,7 @@ class _TestState extends State<Test> {
             Center(
                 child: TextButton(
               onPressed: () async {
-                var res = await dbSql.readData("books", "d ", [] , false ) ;
+                var res = await dbSql.readData("notes") ;
                 print(res) ;  
               },
               child: Text("Click"),

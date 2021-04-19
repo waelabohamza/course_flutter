@@ -50,16 +50,14 @@ class SqlTest {
     print("INSERT TABLE SUCCESS $res");
   }
 
-  readData(String table, String wheredata, List listvalue, [bool filter]) async {
+  readData(String table) async {
     Database mydb = await db;
-    List<Map> response;
-    if (filter == true) {
-      response =
-          await mydb.query(table, where: wheredata, whereArgs: listvalue);
-    } else {
-      response = await mydb.query(table);
-    }
-
+    List<Map> response = await mydb.query(table);
+    return response;
+  }
+    readDataWithFilter(String table, String wheredata, List listvalue) async {
+    Database mydb = await db;
+    List<Map> response =  await mydb.query(table, where: wheredata, whereArgs: listvalue);
     return response;
   }
 
