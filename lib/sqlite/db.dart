@@ -19,18 +19,51 @@ class SqlTest {
 
     String path = join(databasepath, "test.db");
 
-    Database mydb = await openDatabase(path, version: 1, onCreate: _oncreate);
+    Database mydb = await openDatabase(path,
+        version: 3, onCreate: _oncreate, onUpgrade: __onUpgade);
 
     return mydb;
   }
 
+  __onUpgade(Database db, int oldversion, int newversion) async {
+    // CallBack when version upgrade
+    //  print("===============================") ;
+    //  print("Upgrade new : $newversion") ;
+    //  print("Upgrade old : $oldversion") ;
+  }
   _oncreate(Database db, int version) async {
-    await db.execute(
-        'CREATE TABLE "notes" ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"note"	TEXT NOT NULL)');
-    print("INSERT TABLE SUCCESS");
+    // CallBack only  once
+    
+    // For ====================== MultiTables 
+    Batch batch = db.batch();
+    batch.execute('''
+    CREATE TABLE  "notes" 
+    ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"note"	TEXT NOT NULL)''');
+    batch.execute('''
+    CREATE TABLE  IF NOT EXISTS "books" 
+    ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"book"	TEXT NOT NULL)
+    ''');
+    List<dynamic> res = await batch.commit();
+    // ==================== For one Table
+    // await db.execute(
+    //     'CREATE TABLE "notes" ("id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"note"	TEXT NOT NULL)');
+    print("INSERT TABLE SUCCESS $res");
   }
 
-  readData(String sql) async {
+  readData(String table, String wheredata, List listvalue, [bool filter]) async {
+    Database mydb = await db;
+    List<Map> response;
+    if (filter == true) {
+      response =
+          await mydb.query(table, where: wheredata, whereArgs: listvalue);
+    } else {
+      response = await mydb.query(table);
+    }
+
+    return response;
+  }
+
+  rawReadData(String sql) async {
     Database mydb = await db;
 
     List<Map> response = await mydb.rawQuery(sql);
@@ -38,7 +71,15 @@ class SqlTest {
     return response;
   }
 
-  insertData(String sql) async {
+  insertData(String table, Map data) async {
+    Database mydb = await db;
+
+    int response = await mydb.insert(table, data);
+
+    return response;
+  }
+
+  rawInsertData(String sql) async {
     Database mydb = await db;
 
     int response = await mydb.rawInsert(sql);
@@ -46,7 +87,16 @@ class SqlTest {
     return response;
   }
 
-  updateData(String sql) async {
+  updateData(String table, Map data, String wheredata, List listvalue) async {
+    Database mydb = await db;
+
+    int response =
+        await mydb.update(table, data, where: wheredata, whereArgs: listvalue);
+
+    return response;
+  }
+
+  rawUpdateData(String sql) async {
     Database mydb = await db;
 
     int response = await mydb.rawUpdate(sql);
@@ -54,7 +104,16 @@ class SqlTest {
     return response;
   }
 
-  deleteData(String sql) async {
+  deleteData(String table, String wheredata, List listvalue) async {
+    Database mydb = await db;
+
+    int response =
+        await mydb.delete(table, where: wheredata, whereArgs: listvalue);
+
+    return response;
+  }
+
+  rawDeleteData(String sql) async {
     Database mydb = await db;
 
     int response = await mydb.rawDelete(sql);
@@ -62,5 +121,9 @@ class SqlTest {
     return response;
   }
 
- 
+  myDeleteDatabase() async {
+    String databasepath = await getDatabasesPath();
+    String path = join(databasepath, "test.db");
+    await deleteDatabase(path);
+  }
 }

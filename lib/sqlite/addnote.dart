@@ -15,12 +15,7 @@ class _AddNotesSqlState extends State<AddNotesSql> {
 
   var database = new SqlTest();
 
-  insertData(String mynote) async {
-    var response = await database
-        .insertData("INSERT INTO notes (note) VALUES ('$mynote') ");
-
-    print(response);
-  }
+ 
 
   addNotes() async {
     var formdata = formstate.currentState;
@@ -28,7 +23,7 @@ class _AddNotesSqlState extends State<AddNotesSql> {
     if (formdata.validate()) {
       formdata.save();
 
-      await insertData(note);
+     
 
       Navigator.of(context).pushNamed("testdb");
     }

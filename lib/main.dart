@@ -3,7 +3,7 @@ import 'package:course_flutter/auth/signup.dart';
 import 'package:course_flutter/crud/addnotes.dart';
 import 'package:course_flutter/home/homepage.dart';
 import 'package:course_flutter/sqlite/addnote.dart';
-import 'package:course_flutter/sqlite/testdb.dart';
+ 
 import 'package:course_flutter/test.dart';
 import 'package:course_flutter/testtwo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         "addnotes": (context) => AddNotes(),
         "testtwo": (context) => TestTwo()  ,
         "addnote" : (conetxt) => AddNotesSql() , 
-        "testdb" : (context) => TestDB()
+      
       },
     );
   }
